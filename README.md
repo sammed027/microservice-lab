@@ -5,7 +5,7 @@
 [![Python](https://img.shields.io/badge/Python-3.11-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![License](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
 
-An enterprise-grade, microservice-based **Gym Management System** built with **FastAPI**, **Docker**, **SQLite**, and custom **HTML5/Tailwind Web Dashboard**. Includes complete inter-service validation pipelines, zero-dependency test automation, workload benchmark analysis ($W_1$ to $W_5$), interactive web evaluation deck, and PowerPoint presentation.
+An enterprise-grade, microservice-based **Gym Management System** built with **FastAPI**, **Docker**, **SQLite**, and custom **HTML5/Tailwind Web Dashboard**. Includes complete inter-service validation pipelines, zero-dependency test automation, workload benchmark analysis ($W_1$ to $W_5$), and technical evaluation documentation.
 
 ---
 
@@ -133,10 +133,7 @@ GymManagementMicroservices/
 ├── run_tests.py                    # Automated test runner (5 Checkpoints)
 ├── workload_test.py                # Concurrency benchmark suite (W1 - W5)
 ├── generate_graphs.py              # Performance chart generation script
-├── build_full_12_slide_ppt.py      # PowerPoint generation script
 ├── LAB_EVALUATION_REPORT.md        # Comprehensive technical report
-├── presentation_deck.html          # Interactive web presentation deck
-├── Gym_Microservices_Lab_Evaluation.pptx # 12-Slide Evaluation PPT
 ├── member-service/                 # Member Microservice
 │   ├── Dockerfile
 │   ├── requirements.txt
@@ -158,6 +155,4 @@ GymManagementMicroservices/
 
 ## 📄 Documentation & Evaluation Deliverables
 
-- 📄 **[Technical Report](LAB_EVALUATION_REPORT.md)**: Detailed evaluation report covering system design, API contracts, inter-service communication, and benchmark findings.
-- 🖥️ **[Web Evaluation Deck](presentation_deck.html)**: Interactive presentation slides viewable directly in browser.
-- 📊 **[PowerPoint Presentation](Gym_Microservices_Lab_Evaluation.pptx)**: 12-slide evaluation presentation deck.
+- 📄 **[Technical Evaluation Report](LAB_EVALUATION_REPORT.md)**: Detailed evaluation report covering system design, API contracts, inter-service communication, and benchmark findings.

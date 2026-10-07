@@ -14,3 +14,7 @@ env/
 # IDE settings
 .vscode/
 .idea/
+
+# Presentation decks / PPT files
+*.pptx
+*.ppt
