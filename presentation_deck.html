@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Management Microservices - 12-Slide Deck</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+        body { font-family: 'Inter', sans-serif; background-color: #0f172a; color: #1f2937; }
+        .slide { display: none; width: 1050px; height: 590px; background: #f4f6f9; border-radius: 12px; overflow: hidden; position: relative; box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5); }
+        .slide.active { display: flex; flex-direction: column; }
+        .slide-dark { background: #17233d; color: white; }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col items-center justify-center p-6">
+
+    <!-- Slide Deck Container -->
+    <div id="deck" class="relative">
+        
+        <!-- SLIDE 1: TITLE SLIDE -->
+        <div class="slide slide-dark active p-12 justify-between">
+            <div class="flex flex-col justify-center flex-1">
+                <div class="flex items-stretch space-x-6">
+                    <div class="w-3 bg-amber-500 rounded-full"></div>
+                    <div class="space-y-4">
+                        <h1 class="text-4xl font-extrabold text-white leading-tight">
+                            Build, Deploy and Analyze a Containerized<br>Microservice Application Under Varying Workloads
+                        </h1>
+                        <h2 class="text-2xl font-bold text-sky-300">
+                            Gym Management Microservices
+                        </h2>
+                        <h3 class="text-lg text-slate-300">
+                            Cloud Computing Lab Evaluation
+                        </h3>
+                    </div>
+                </div>
+            </div>
+            <div class="text-slate-400 text-sm border-t border-slate-700/60 pt-4 flex justify-between">
+                <span>Presented by: Student Team</span>
+                <span>KLE Technological University, BVB Campus, Hubli</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 2: AIM AND OBJECTIVES -->
+        <div class="slide">
+            <div class="bg-[#17233d] text-white px-8 py-4 border-b-4 border-teal-500">
+                <h2 class="text-2xl font-bold">Aim and Objectives</h2>
+            </div>
+            <div class="p-8 flex-1 flex flex-col justify-between">
+                <p class="text-base text-slate-700 font-medium leading-relaxed">
+                    To build a microservice application with three independent services, containerize and deploy it with Docker and Docker Compose, generate varying workloads, monitor resource use, and analyze performance.
+                </p>
+
+                <div class="grid grid-cols-4 gap-4 my-4">
+                    <div class="bg-white p-5 rounded-lg border border-slate-200 border-l-4 border-l-teal-500 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-[#17233d] mb-2">Develop</h3>
+                            <p class="text-sm text-slate-600">Three independent FastAPI microservices with REST APIs</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg border border-slate-200 border-l-4 border-l-teal-500 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-[#17233d] mb-2">Containerize</h3>
+                            <p class="text-sm text-slate-600">One Dockerfile and one Docker image per service</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg border border-slate-200 border-l-4 border-l-teal-500 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-[#17233d] mb-2">Deploy</h3>
+                            <p class="text-sm text-slate-600">Docker Compose runs all three containers on one network</p>
+                        </div>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg border border-slate-200 border-l-4 border-l-teal-500 shadow-sm flex flex-col justify-between">
+                        <div>
+                            <h3 class="text-xl font-bold text-[#17233d] mb-2">Analyze</h3>
+                            <p class="text-sm text-slate-600">Load test at 1, 2, 4, 8, 16 concurrent requests and monitor CPU and memory</p>
+                        </div>
+                    </div>
+                </div>
+
+                <p class="text-sm italic text-teal-600 font-semibold">
+                    Core challenge: moving from one monolith to independent, networked containers while finding the performance bottleneck.
+                </p>
+            </div>
+            <div class="px-8 py-2 text-xs text-slate-400 border-t border-slate-200 flex justify-between">
+                <span>Gym Management Microservices | Cloud Computing Lab Evaluation</span>
+                <span>Slide 2</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 3: TECH STACK AND ENVIRONMENT -->
+        <div class="slide">
+            <div class="bg-[#17233d] text-white px-8 py-4 border-b-4 border-teal-500">
+                <h2 class="text-2xl font-bold">Technology Stack and Environment</h2>
+            </div>
+            <div class="p-8 flex-1 grid grid-cols-3 gap-6 align-content-start">
+                <div class="bg-white p-6 rounded-lg border border-slate-200 border-l-4 border-l-teal-500 shadow-sm">
+                    <h3 class="text-lg font-bold text-[#17233d] mb-2">Backend</h3>
+                    <p class="text-xl font-bold text-slate-800">Python 3.11 + FastAPI</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg border border-slate-200 border-l-4 border-l-teal-500 shadow-sm">
+                    <h3 class="text-lg font-bold text-[#17233d] mb-2">Web server</h3>
+                    <p class="text-xl font-bold text-slate-800">Uvicorn (ASGI worker)</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg border border-slate-200 border-l-4 border-l-teal-500 shadow-sm">
+                    <h3 class="text-lg font-bold text-[#17233d] mb-2">Containerization</h3>
+                    <p class="text-xl font-bold text-slate-800">Docker 29.8.0</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg border border-slate-200 border-l-4 border-l-teal-500 shadow-sm">
+                    <h3 class="text-lg font-bold text-[#17233d] mb-2">Orchestration</h3>
+                    <p class="text-xl font-bold text-slate-800">Docker Compose v5.5.1</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg border border-slate-200 border-l-4 border-l-teal-500 shadow-sm">
+                    <h3 class="text-lg font-bold text-[#17233d] mb-2">Load testing</h3>
+                    <p class="text-xl font-bold text-slate-800">Python thread pool</p>
+                </div>
+                <div class="bg-white p-6 rounded-lg border border-slate-200 border-l-4 border-l-teal-500 shadow-sm">
+                    <h3 class="text-lg font-bold text-[#17233d] mb-2">Test machine</h3>
+                    <p class="text-xl font-bold text-slate-800">macOS, 6 CPUs, 3.8 GB for Docker</p>
+                </div>
+            </div>
+            <div class="px-8 py-2 text-xs text-slate-400 border-t border-slate-200 flex justify-between">
+                <span>Gym Management Microservices | Cloud Computing Lab Evaluation</span>
+                <span>Slide 3</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 4: SYSTEM ARCHITECTURE -->
+        <div class="slide">
+            <div class="bg-[#17233d] text-white px-8 py-4 border-b-4 border-teal-500">
+                <h2 class="text-2xl font-bold">System Architecture</h2>
+            </div>
+            <div class="p-6 flex-1 flex flex-col items-center justify-center">
+                <div class="bg-slate-600 text-white px-8 py-2.5 rounded-lg text-center shadow-md mb-4">
+                    <div class="font-bold text-base">Client</div>
+                    <div class="text-xs text-slate-200">curl / load test</div>
+                </div>
+
+                <div class="text-slate-400 text-lg mb-2"><i class="fa-solid fa-arrow-down"></i></div>
+
+                <div class="border-2 border-dashed border-teal-500 bg-teal-50/50 p-6 rounded-xl w-full max-w-2xl relative">
+                    <div class="absolute -top-3 left-4 bg-white px-2 text-xs font-bold text-teal-700">Docker network: gym-network</div>
+
+                    <div class="bg-[#17233d] text-white p-3 rounded-lg text-center shadow-md max-w-sm mx-auto mb-6">
+                        <div class="font-bold text-lg">attendance-service</div>
+                        <div class="text-xs text-slate-300">Port 8003 (entry point)</div>
+                    </div>
+
+                    <div class="flex justify-around text-slate-400 text-lg mb-2">
+                        <i class="fa-solid fa-arrow-down-left"></i>
+                        <i class="fa-solid fa-arrow-down-right"></i>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-8">
+                        <div class="bg-teal-600 text-white p-3 rounded-lg text-center shadow-md">
+                            <div class="font-bold text-base">member-service</div>
+                            <div class="text-xs text-teal-100">Port 8001</div>
+                        </div>
+                        <div class="bg-amber-600 text-white p-3 rounded-lg text-center shadow-md">
+                            <div class="font-bold text-base">membership-service</div>
+                            <div class="text-xs text-amber-100">Port 8002</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="px-8 py-2 text-xs text-slate-400 border-t border-slate-200 flex justify-between">
+                <span>Gym Management Microservices | Cloud Computing Lab Evaluation</span>
+                <span>Slide 4</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 5: MICROSERVICES AND REST API ENDPOINTS -->
+        <div class="slide">
+            <div class="bg-[#17233d] text-white px-8 py-4 border-b-4 border-teal-500">
+                <h2 class="text-2xl font-bold">Microservices and REST API Endpoints</h2>
+            </div>
+            <div class="p-8 flex-1">
+                <table class="w-full text-left border-collapse bg-white shadow-sm rounded-lg overflow-hidden border border-slate-200">
+                    <thead class="bg-[#17233d] text-white text-sm">
+                        <tr>
+                            <th class="p-3 border-r border-slate-700">Service</th>
+                            <th class="p-3 border-r border-slate-700">Port</th>
+                            <th class="p-3 border-r border-slate-700">Responsibility</th>
+                            <th class="p-3">Endpoints</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-xs text-slate-700 divide-y divide-slate-200">
+                        <tr>
+                            <td class="p-3 font-bold text-[#17233d]">attendance-service</td>
+                            <td class="p-3 font-semibold">8003</td>
+                            <td class="p-3">Entry point. Performs check-in by calling member and membership services.</td>
+                            <td class="p-3 font-mono text-slate-800">GET /<br>POST /attendance/checkin<br>POST /attendance/checkout/{id}<br>GET /attendance/{member_id}</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-[#17233d]">member-service</td>
+                            <td class="p-3 font-semibold">8001</td>
+                            <td class="p-3">Stores and returns gym member profile records.</td>
+                            <td class="p-3 font-mono text-slate-800">GET /<br>GET /members<br>POST /members<br>GET /members/{id}<br>PUT /members/{id}<br>DELETE /members/{id}</td>
+                        </tr>
+                        <tr>
+                            <td class="p-3 font-bold text-[#17233d]">membership-service</td>
+                            <td class="p-3 font-semibold">8002</td>
+                            <td class="p-3">Stores membership plan tiers and validity status.</td>
+                            <td class="p-3 font-mono text-slate-800">GET /<br>GET /memberships<br>POST /memberships<br>GET /memberships/{member_id}<br>PUT /memberships/{member_id}<br>DELETE /memberships/{member_id}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="px-8 py-2 text-xs text-slate-400 border-t border-slate-200 flex justify-between">
+                <span>Gym Management Microservices | Cloud Computing Lab Evaluation</span>
+                <span>Slide 5</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 6: CHECKPOINT 1: DEVELOP THE MICROSERVICES -->
+        <div class="slide">
+            <div class="bg-[#17233d] text-white px-8 py-4 border-b-4 border-teal-500">
+                <h2 class="text-2xl font-bold">Checkpoint 1: Develop the Microservices</h2>
+            </div>
+            <div class="p-8 flex-1 grid grid-cols-2 gap-8 items-start">
+                <div class="space-y-4 text-slate-700">
+                    <ul class="space-y-4 text-base font-medium">
+                        <li class="flex items-start gap-3"><span class="text-teal-600 font-bold">•</span> Domain: Gym Management System</li>
+                        <li class="flex items-start gap-3"><span class="text-teal-600 font-bold">•</span> Three services, each in its own folder with its own main.py</li>
+                        <li class="flex items-start gap-3"><span class="text-teal-600 font-bold">•</span> Built with Python and FastAPI</li>
+                        <li class="flex items-start gap-3"><span class="text-teal-600 font-bold">•</span> Each service run and tested independently first</li>
+                        <li class="flex items-start gap-3"><span class="text-teal-600 font-bold">•</span> All APIs returned the expected JSON</li>
+                    </ul>
+                </div>
+                <div class="bg-[#17233d] p-5 rounded-lg text-white font-mono text-xs overflow-x-auto shadow-md border border-slate-700">
+<pre>from fastapi import FastAPI, HTTPException
+from .database import Base, engine, SessionLocal
+from .models import Member
+
+app = FastAPI(title="Gym Member Service")
+
+Base.metadata.create_all(bind=engine)
+
+@app.get("/members/{member_id}")
+def get_member(member_id: int):
+    db = SessionLocal()
+    member = db.query(Member).filter(
+        Member.id == member_id
+    ).first()
+    db.close()
+    if not member:
+        raise HTTPException(status_code=404, 
+                            detail="Member not found")
+    return {"id": member.id, "name": member.name}</pre>
+                </div>
+            </div>
+            <div class="px-8 py-2 text-xs text-slate-400 border-t border-slate-200 flex justify-between">
+                <span>Gym Management Microservices | Cloud Computing Lab Evaluation</span>
+                <span>Slide 6</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 7: CHECKPOINT 2: CONTAINERIZE AND DEPLOY -->
+        <div class="slide">
+            <div class="bg-[#17233d] text-white px-8 py-4 border-b-4 border-teal-500">
+                <h2 class="text-2xl font-bold">Checkpoint 2: Containerize and Deploy</h2>
+            </div>
+            <div class="p-6 flex-1 flex flex-col justify-between">
+                <div class="grid grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-bold text-sm text-[#17233d] mb-2">Dockerfile (one per service)</h4>
+                        <div class="bg-[#17233d] p-4 rounded-lg text-white font-mono text-xs">
+<pre>FROM python:3.11-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY app ./app
+EXPOSE 8000
+CMD ["uvicorn", "app.main:app", 
+     "--host", "0.0.0.0", "--port", "8000"]</pre>
+                        </div>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm text-[#17233d] mb-2">docker-compose.yml (attendance-service)</h4>
+                        <div class="bg-[#17233d] p-4 rounded-lg text-white font-mono text-xs">
+<pre>attendance-service:
+  build: ./attendance-service
+  ports: ["8003:8000"]
+  environment:
+    - MEMBER_SERVICE_URL=http://member-service:8000
+    - MEMBERSHIP_SERVICE_URL=http://membership-service:8000
+  networks: [gym-network]</pre>
+                        </div>
+                    </div>
+                </div>
+                <div class="space-y-1 text-sm text-slate-700">
+                    <p><span class="text-teal-600 font-bold">•</span> Three images built: verified with <code class="bg-teal-100 text-teal-800 px-1 rounded">docker images</code></p>
+                    <p><span class="text-teal-600 font-bold">•</span> One command deploys all: <code class="bg-teal-100 text-teal-800 px-1 rounded">docker compose up --build -d</code></p>
+                    <p><span class="text-teal-600 font-bold">•</span> Three containers running: verified with <code class="bg-teal-100 text-teal-800 px-1 rounded">docker ps</code></p>
+                </div>
+            </div>
+            <div class="px-8 py-2 text-xs text-slate-400 border-t border-slate-200 flex justify-between">
+                <span>Gym Management Microservices | Cloud Computing Lab Evaluation</span>
+                <span>Slide 7</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 8: CHECKPOINT 3: INTER-SERVICE COMMUNICATION -->
+        <div class="slide">
+            <div class="bg-[#17233d] text-white px-8 py-4 border-b-4 border-teal-500">
+                <h2 class="text-2xl font-bold">Checkpoint 3: Inter-Service Communication</h2>
+            </div>
+            <div class="p-6 flex-1 grid grid-cols-2 gap-6 items-start">
+                <div class="space-y-4">
+                    <div class="bg-white p-5 rounded-lg border border-slate-200 border-l-4 border-l-teal-500 shadow-sm">
+                        <h3 class="font-bold text-lg text-[#17233d] mb-2">Docker DNS, not localhost</h3>
+                        <p class="text-sm text-slate-600 leading-relaxed">
+                            Inside a container, localhost means that container itself. Services reach each other by service name on gym-network.
+                        </p>
+                    </div>
+                    <div class="bg-[#17233d] p-4 rounded-lg text-white font-mono text-xs">
+                        MEMBER_SERVICE_URL=http://member-service:8000<br>
+                        MEMBERSHIP_SERVICE_URL=http://membership-service:8000
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="font-bold text-sm text-[#17233d] mb-2">End-to-end request</h4>
+                    <div class="bg-[#17233d] p-4 rounded-lg text-white font-mono text-xs">
+<pre>$ curl -X POST http://localhost:8003/attendance/checkin?member_id=1
+
+{
+  "message": "Check-in successful",
+  "attendance_id": 1,
+  "member_id": 1,
+  "member_name": "Alice Smith",
+  "membership_plan": "VIP_GOLD",
+  "membership_status": "ACTIVE",
+  "status": "PRESENT",
+  "check_in": "2026-10-08 00:20:00"
+}</pre>
+                    </div>
+                </div>
+            </div>
+            <div class="px-8 py-2 text-xs text-slate-400 border-t border-slate-200 flex justify-between">
+                <span>Gym Management Microservices | Cloud Computing Lab Evaluation</span>
+                <span>Slide 8</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 9: CHECKPOINT 4: WORKLOAD GENERATION AND MONITORING -->
+        <div class="slide">
+            <div class="bg-[#17233d] text-white px-8 py-4 border-b-4 border-teal-500">
+                <h2 class="text-2xl font-bold">Checkpoint 4: Workload Generation and Monitoring</h2>
+            </div>
+            <div class="p-6 flex-1 flex flex-col justify-between">
+                <div class="grid grid-cols-2 gap-6">
+                    <div class="bg-white p-5 rounded-lg border border-slate-200 border-l-4 border-l-teal-500 shadow-sm">
+                        <h3 class="text-lg font-bold text-[#17233d] mb-2">Target API</h3>
+                        <p class="text-sm font-semibold text-slate-800">POST /attendance/checkin?member_id=1</p>
+                        <p class="text-xs text-slate-500 mt-1">Touches all three microservices</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg border border-slate-200 border-l-4 border-l-teal-500 shadow-sm">
+                        <h3 class="text-lg font-bold text-[#17233d] mb-2">Load generator</h3>
+                        <p class="text-sm font-semibold text-slate-800">Python ThreadPoolExecutor</p>
+                        <p class="text-xs text-slate-500 mt-1">30 to 80 requests per workload level</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg border border-slate-200 border-l-4 border-l-teal-500 shadow-sm">
+                        <h3 class="text-lg font-bold text-[#17233d] mb-2">Workload levels</h3>
+                        <p class="text-sm font-semibold text-slate-800">W1 = 1 &nbsp; W2 = 2 &nbsp; W3 = 4 &nbsp; W4 = 8 &nbsp; W5 = 16</p>
+                        <p class="text-xs text-slate-500 mt-1">concurrent requests</p>
+                    </div>
+                    <div class="bg-white p-5 rounded-lg border border-slate-200 border-l-4 border-l-teal-500 shadow-sm">
+                        <h3 class="text-lg font-bold text-[#17233d] mb-2">Monitoring</h3>
+                        <p class="text-sm font-semibold text-slate-800">docker stats sampled during every level</p>
+                        <p class="text-xs text-slate-500 mt-1">average CPU % and memory MB per container</p>
+                    </div>
+                </div>
+
+                <p class="text-xs italic text-teal-600 font-semibold">
+                    Recorded for every level: average response time, throughput, failed requests, CPU % and memory MB for all three containers.
+                </p>
+            </div>
+            <div class="px-8 py-2 text-xs text-slate-400 border-t border-slate-200 flex justify-between">
+                <span>Gym Management Microservices | Cloud Computing Lab Evaluation</span>
+                <span>Slide 9</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 10: OBSERVATION TABLE (MEASURED VALUES) -->
+        <div class="slide">
+            <div class="bg-[#17233d] text-white px-8 py-4 border-b-4 border-teal-500">
+                <h2 class="text-2xl font-bold">Observation Table (measured values)</h2>
+            </div>
+            <div class="p-6 flex-1 flex flex-col justify-between">
+                <table class="w-full text-center border-collapse bg-white shadow-sm rounded-lg overflow-hidden border border-slate-200">
+                    <thead class="bg-[#17233d] text-white text-xs">
+                        <tr>
+                            <th class="p-2 border-r border-slate-700">Workload</th>
+                            <th class="p-2 border-r border-slate-700">Concurrency</th>
+                            <th class="p-2 border-r border-slate-700">Avg resp (ms)</th>
+                            <th class="p-2 border-r border-slate-700">Throughput (req/s)</th>
+                            <th class="p-2 border-r border-slate-700">Failed</th>
+                            <th class="p-2 border-r border-slate-700">CPU % Att</th>
+                            <th class="p-2 border-r border-slate-700">CPU % Mem</th>
+                            <th class="p-2 border-r border-slate-700">CPU % MS</th>
+                            <th class="p-2 border-r border-slate-700 bg-amber-600">Mem MB Att</th>
+                            <th class="p-2 border-r border-slate-700">Mem MB Mem</th>
+                            <th class="p-2">Mem MB MS</th>
+                        </tr>
+                    </thead>
+                    <tbody class="text-xs text-slate-700 divide-y divide-slate-200">
+                        <tr>
+                            <td class="p-2.5 font-bold">W1</td><td>1</td><td>10.14</td><td>98.38</td><td>0</td><td>0.34%</td><td>0.43%</td><td>0.38%</td><td class="bg-amber-100 font-bold">60.94</td><td>52.48</td><td>52.43</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2.5 font-bold">W2</td><td>2</td><td>15.52</td><td>126.71</td><td>0</td><td>0.80%</td><td>0.41%</td><td>0.38%</td><td class="bg-amber-100 font-bold">66.38</td><td>52.70</td><td>52.91</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2.5 font-bold">W3</td><td>4</td><td>27.40</td><td>142.50</td><td>0</td><td>0.33%</td><td>0.32%</td><td>0.47%</td><td class="bg-amber-100 font-bold">67.85</td><td>52.93</td><td>52.90</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2.5 font-bold">W4</td><td>8</td><td>54.78</td><td>142.29</td><td>0</td><td>0.48%</td><td>0.40%</td><td>0.57%</td><td class="bg-amber-100 font-bold">85.40</td><td>53.18</td><td>53.14</td>
+                        </tr>
+                        <tr>
+                            <td class="p-2.5 font-bold">W5</td><td>16</td><td>101.24</td><td>150.50</td><td>0</td><td>0.45%</td><td>0.34%</td><td>0.40%</td><td class="bg-amber-100 font-bold">90.53</td><td>56.65</td><td>55.61</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="space-y-1 text-xs text-slate-700">
+                    <p><span class="text-teal-600 font-bold">•</span> 0 failed requests at every level</p>
+                    <p><span class="text-teal-600 font-bold">•</span> Attendance service (highlighted) uses the most memory (~90 MB); memory stays flat at about 50 to 90 MB</p>
+                </div>
+            </div>
+            <div class="px-8 py-2 text-xs text-slate-400 border-t border-slate-200 flex justify-between">
+                <span>Gym Management Microservices | Cloud Computing Lab Evaluation</span>
+                <span>Slide 10</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 11: PERFORMANCE GRAPHS -->
+        <div class="slide">
+            <div class="bg-[#17233d] text-white px-8 py-4 border-b-4 border-teal-500">
+                <h2 class="text-2xl font-bold">Performance Graphs</h2>
+            </div>
+            <div class="p-4 flex-1 grid grid-cols-2 gap-4">
+                <div class="bg-white p-2 rounded-lg border border-slate-200 shadow-sm flex flex-col items-center">
+                    <h4 class="text-xs font-bold text-slate-700 mb-1">Response Time vs Concurrency</h4>
+                    <img src="chart_response_time.png" class="h-44 object-contain">
+                </div>
+                <div class="bg-white p-2 rounded-lg border border-slate-200 shadow-sm flex flex-col items-center">
+                    <h4 class="text-xs font-bold text-slate-700 mb-1">Throughput vs Concurrency</h4>
+                    <img src="chart_throughput.png" class="h-44 object-contain">
+                </div>
+                <div class="bg-white p-2 rounded-lg border border-slate-200 shadow-sm flex flex-col items-center">
+                    <h4 class="text-xs font-bold text-slate-700 mb-1">CPU Utilization (%)</h4>
+                    <img src="chart_cpu_utilization.png" class="h-44 object-contain">
+                </div>
+                <div class="bg-white p-2 rounded-lg border border-slate-200 shadow-sm flex flex-col items-center">
+                    <h4 class="text-xs font-bold text-slate-700 mb-1">Memory Utilization (MB)</h4>
+                    <img src="chart_memory_utilization.png" class="h-44 object-contain">
+                </div>
+            </div>
+            <div class="px-8 py-2 text-xs text-slate-400 border-t border-slate-200 flex justify-between">
+                <span>Gym Management Microservices | Cloud Computing Lab Evaluation</span>
+                <span>Slide 11</span>
+            </div>
+        </div>
+
+        <!-- SLIDE 12: CONCLUSION AND EVALUATION SUMMARY -->
+        <div class="slide">
+            <div class="bg-[#17233d] text-white px-8 py-4 border-b-4 border-teal-500">
+                <h2 class="text-2xl font-bold">Conclusion and Evaluation Summary</h2>
+            </div>
+            <div class="p-8 flex-1">
+                <div class="bg-white p-6 rounded-lg border border-slate-200 border-l-4 border-l-teal-500 shadow-sm space-y-4">
+                    <h3 class="text-xl font-bold text-[#17233d]">Summary of Completed Checkpoints</h3>
+                    <ul class="space-y-3 text-sm text-slate-700">
+                        <li class="flex items-start gap-2"><span class="text-teal-600 font-bold">✔</span> <strong>Checkpoint 1 PASSED:</strong> Designed and implemented 3 independent microservices (Member, Membership, Attendance).</li>
+                        <li class="flex items-start gap-2"><span class="text-teal-600 font-bold">✔</span> <strong>Checkpoint 2 PASSED:</strong> Containerized each service with Dockerfiles and deployed via Docker Compose.</li>
+                        <li class="flex items-start gap-2"><span class="text-teal-600 font-bold">✔</span> <strong>Checkpoint 3 PASSED:</strong> Verified inter-service REST communication over container DNS bridge network.</li>
+                        <li class="flex items-start gap-2"><span class="text-teal-600 font-bold">✔</span> <strong>Checkpoint 4 PASSED:</strong> Executed workload testing across 5 concurrency levels (W1 - W5).</li>
+                        <li class="flex items-start gap-2"><span class="text-teal-600 font-bold">✔</span> <strong>Checkpoint 5 PASSED:</strong> Analyzed performance measurements, generated visual charts, and verified 0% error rate.</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="px-8 py-2 text-xs text-slate-400 border-t border-slate-200 flex justify-between">
+                <span>Gym Management Microservices | Cloud Computing Lab Evaluation</span>
+                <span>Slide 12</span>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="mt-6 flex items-center space-x-4">
+        <button onclick="prevSlide()" class="bg-slate-800 hover:bg-slate-700 text-white px-5 py-2 rounded-lg font-semibold text-sm flex items-center space-x-2 border border-slate-700">
+            <i class="fa-solid fa-arrow-left"></i><span>Previous Slide</span>
+        </button>
+        <span id="slide-num" class="text-slate-300 text-sm font-semibold">Slide 1 of 12</span>
+        <button onclick="nextSlide()" class="bg-teal-600 hover:bg-teal-500 text-white px-5 py-2 rounded-lg font-semibold text-sm flex items-center space-x-2">
+            <span>Next Slide</span><i class="fa-solid fa-arrow-right"></i>
+        </button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const slideNum = document.getElementById('slide-num');
+
+        function showSlide(index) {
+            slides.forEach(s => s.classList.remove('active'));
+            slides[index].classList.add('active');
+            slideNum.textContent = `Slide ${index + 1} of ${slides.length}`;
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) { currentSlide--; showSlide(currentSlide); }
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) { currentSlide++; showSlide(currentSlide); }
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+    </script>
+</body>
+</html>
